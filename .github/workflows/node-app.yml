@@ -23,7 +23,7 @@ jobs:
 
     - name: Start Node.js App
       run: |
-        npm start &  # Background mode
+        npm start
 
     - name: Install & Start Ngrok
       run: |
