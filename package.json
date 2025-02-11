@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/adnanhassanriar/NodeJS/issues"
   },
-  "homepage": "https://github.com/adnanhassanriar/NodeJS#readme"
+  "homepage": "https://github.com/adnanhassanriar/NodeJS#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
