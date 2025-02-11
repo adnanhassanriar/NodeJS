@@ -18,6 +18,9 @@ jobs:
       with:
         node-version: 18
 
+    - name: Debug Directory
+      run: ls -R
+
     - name: Install dependencies
       run: npm install
 
