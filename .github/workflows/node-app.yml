@@ -1,0 +1,38 @@
+name: Deploy Node.js App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Start Node.js App
+      run: |
+        npm start &  # Background mode
+
+    - name: Install & Start Ngrok
+      run: |
+        curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
+        echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
+        sudo apt update && sudo apt install ngrok -y
+        ngrok http 3000 > /dev/null &  # Start Ngrok
+
+    - name: Get Ngrok Public URL
+      run: |
+        sleep 5  # Wait for Ngrok to start
+        curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
